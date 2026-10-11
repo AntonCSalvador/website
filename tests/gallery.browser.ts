@@ -68,8 +68,6 @@ test('changing the active trip closes a photo belonging to the previous panel', 
   try {
     const page = await browser.newPage();
     await openFixture(page);
-    // Move the rendered production fixture into the real static travel panel.
-    await page.evaluate(() => document.querySelector('#trip-boston')!.append(document.querySelector('#test-fixtures [data-photo-gallery="boston"]')!));
     await page.locator('.destination-list [data-trip-select="boston"]').click();
     assert.match(await page.locator('.trip-selection-status').innerText(), /1 photo/);
     const gallery = page.locator('#trip-boston [data-photo-gallery]');
@@ -80,6 +78,29 @@ test('changing the active trip closes a photo belonging to the previous panel', 
     await page.waitForFunction(() => !document.querySelector<HTMLDialogElement>('#trip-boston dialog')!.open);
     assert.equal(await page.locator('#trip-iceland').isVisible(), true);
     assert.equal(await gallery.locator('.photo-link').evaluate((link) => link === document.activeElement), false);
+  } finally { await browser.close(); }
+});
+
+// Conditioning the trail on empty photos removes the approved transition from real galleries.
+test('populated trip retains its decorative hiker transition and respects reduced motion', async () => {
+  const browser = await chromium.launch({ channel: 'chrome' });
+  try {
+    const page = await browser.newPage({ reducedMotion: 'no-preference' });
+    await openFixture(page);
+    const panel = page.locator('#trip-boston');
+    assert.equal(await panel.locator('.photo-link').count(), 1);
+    assert.equal(await panel.locator('.hiker-trail[aria-hidden="true"] .hiker').count(), 1);
+    assert.doesNotMatch(await panel.innerText(), /Photos coming soon|A little space for the memories/);
+    const transition = await page.evaluate(() => {
+      document.querySelector<HTMLAnchorElement>('.destination-list [data-trip-select="boston"]')!.click();
+      const panel = document.querySelector<HTMLElement>('#trip-boston')!;
+      const animation = panel.querySelector('.hiker')!.getAnimations()[0];
+      return { hidden: panel.hidden, duration: animation?.effect?.getTiming().duration, playState: animation?.playState };
+    });
+    assert.deepEqual(transition, { hidden: false, duration: 500, playState: 'running' });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.locator('.destination-list [data-trip-select="boston"]').click();
+    assert.equal(await panel.locator('.hiker').evaluate((hiker) => hiker.getAnimations().length), 0);
   } finally { await browser.close(); }
 });
 
