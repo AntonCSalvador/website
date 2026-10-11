@@ -56,6 +56,20 @@ test('pins and list work by keyboard, overview resets the map, and reduced motio
     await page.keyboard.press('Enter');
     assert.equal(await page.locator('#travel').getAttribute('data-map-view'), 'overview');
     assert.equal(await page.locator('#trip-iceland').isVisible(), true);
+    // A selected link color below 4.5:1 loses contrast against the travel surface.
+    const contrast = await page.locator('.destination-list [aria-pressed="true"]').evaluate((link) => {
+      const luminance = (color: string) => {
+        const channels = color.match(/\d+/g)!.slice(0, 3).map((value) => {
+          const channel = Number(value) / 255;
+          return channel <= .04045 ? channel / 12.92 : ((channel + .055) / 1.055) ** 2.4;
+        });
+        return channels[0] * .2126 + channels[1] * .7152 + channels[2] * .0722;
+      };
+      const foreground = luminance(getComputedStyle(link).color);
+      const background = luminance(getComputedStyle(document.querySelector('.travel-section')!).backgroundColor);
+      return (Math.max(foreground, background) + .05) / (Math.min(foreground, background) + .05);
+    });
+    assert.ok(contrast >= 4.5, `Selected destination link contrast is ${contrast.toFixed(3)}:1`);
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
   } finally {
     await browser.close();

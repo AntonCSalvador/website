@@ -13,12 +13,12 @@ I cofounded Rewala, a B2B loyalty platform built with Next.js, TypeScript, and F
 
 ## From an idea to real use
 
-As a cofounder, I helped build and grow the product from zero to more than five business clients and more than 300 active users.
+As a cofounder, I helped build and grow the product from zero to 5+ business clients and 300+ active users.
 
 Next.js and TypeScript support the web application, with Firebase providing the backend foundation.
 
 ## Rewards with a measurable result
 
-The platform generated more than $11,000 in rewards-driven sales for participating businesses. That figure represents sales driven by the rewards platform, rather than company revenue.
+The platform generated $11,000+ in rewards-driven sales for participating businesses. That figure represents sales driven by the rewards platform, rather than company revenue.
 
 Rewala gave me another reason to keep building: seeing a product used by real businesses and customers.
