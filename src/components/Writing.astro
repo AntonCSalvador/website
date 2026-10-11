@@ -1,17 +1,17 @@
 ---
-import { getCollection } from 'astro:content';
-import { publishedPosts } from '../lib/publication';
+import { getBlogPosts } from '../lib/blog';
 import Arrow from './Arrow.astro';
 
 interface Props { onHomepage?: boolean }
 const { onHomepage = false } = Astro.props;
-const posts = publishedPosts(await getCollection('blog'));
+const posts = await getBlogPosts();
+const Heading = onHomepage ? 'h3' : 'h2';
 ---
 {posts.length ? (
   <ul class="writing-list">
-    {posts.map((post) => <li><a href={`/blog/${post.id}/`}><h3>{post.data.title}</h3><p>{post.data.description}</p><time datetime={post.data.publicationDate.toISOString()}>{post.data.publicationDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}</time></a></li>)}
+    {posts.map((post) => <li><a href={`/blog/${post.id}/`}><Heading>{post.data.title}</Heading><p>{post.data.description}</p><time datetime={post.data.publicationDate.toISOString()}>{post.data.publicationDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}</time></a></li>)}
   </ul>
 ) : (
-  <div class="writing-empty"><h3>Writing soon<span aria-hidden="true">.</span></h3><p>A little space for ideas, things I've learned, and whatever I can't stop thinking about.</p></div>
+  <div class="writing-empty"><Heading>Writing soon<span aria-hidden="true">.</span></Heading><p>A little space for ideas, things I've learned, and whatever I can't stop thinking about.</p></div>
 )}
 {onHomepage && <a class="text-link" href="/blog/">Visit the blog <Arrow /></a>}

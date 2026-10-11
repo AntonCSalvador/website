@@ -114,13 +114,13 @@
   .about-closing { font-weight: 650; }
   .writing-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
   .writing-empty { margin-bottom: 1.5rem; }
-  .writing-empty h3 { margin-bottom: 1.1rem; }
-  .writing-empty h3 span { color: var(--orange); }
+  .writing-empty :is(h2, h3) { font-size: clamp(1.7rem, 2.2vw, 2.2rem); margin-bottom: 1.1rem; }
+  .writing-empty :is(h2, h3) span { color: var(--orange); }
   .writing-empty p { color: var(--ink-soft); max-width: 44ch; }
   .writing-list { list-style: none; padding: 0; }
   .writing-list li { padding-block: 1.5rem; border-top: 1px solid var(--line); }
   .writing-list a { text-decoration: none; }
-  .writing-list h3 { font-size: 1.5rem; margin-bottom: .6rem; }
+  .writing-list :is(h2, h3) { font-size: 1.5rem; margin-bottom: .6rem; }
   .writing-list p { color: var(--ink-soft); }
   .writing-list time { display: block; font-size: .85rem; margin-top: .7rem; }
   .travel-section { background: #eef2e4; }

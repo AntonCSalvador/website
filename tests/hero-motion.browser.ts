@@ -45,6 +45,9 @@ test('mobile hero remains readable and illustrated without JavaScript', async ()
     await page.goto('http://127.0.0.1:4321/');
     assert.equal(await page.locator('.hero').getAttribute('data-motion'), 'paused');
     assert.equal(await page.locator('.hero-art').evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0), true);
+    // Omitting responsive candidates makes phones download the full landscape.
+    assert.ok((await page.locator('.hero-art').getAttribute('srcset'))?.includes('640w'));
+    assert.ok(await page.locator('.hero-art').getAttribute('sizes'));
     const heading = await page.locator('#hero-title').boundingBox();
     assert.ok(heading && heading.x >= 0 && heading.x + heading.width <= 390);
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), true);

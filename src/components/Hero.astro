@@ -1,11 +1,14 @@
 ---
 import Arrow from './Arrow.astro';
 import basecamp from '../assets/hero/basecamp.webp';
+import basecamp640 from '../assets/hero/basecamp-640.webp';
+import basecamp960 from '../assets/hero/basecamp-960.webp';
+import basecamp1280 from '../assets/hero/basecamp-1280.webp';
 import cloud from '../assets/hero/cloud.webp';
 ---
 <section class="hero" aria-labelledby="hero-title" data-motion="paused">
   <div class="hero-scene" aria-hidden="true">
-    <img class="hero-art" src={basecamp.src} width={basecamp.width} height={basecamp.height} alt="" fetchpriority="high" />
+    <img class="hero-art" src={basecamp.src} srcset={`${basecamp640.src} 640w, ${basecamp960.src} 960w, ${basecamp1280.src} 1280w, ${basecamp.src} 1536w`} sizes="(max-width: 680px) max(100vw, 570px), max(100vw, 1275px)" width={basecamp.width} height={basecamp.height} alt="" fetchpriority="high" />
     <div class="hero-sky"></div>
     <img class="hero-cloud" src={cloud.src} width={cloud.width} height={cloud.height} alt="" />
     <span class="camp-glow"></span>

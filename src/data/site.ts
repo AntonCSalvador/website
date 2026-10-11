@@ -7,4 +7,7 @@ export const site: {
 } = {
   name: 'Anton Salvador',
   url: 'https://antonsalvador.cc',
+  email: 'antoncsalvador@gmail.com',
+  github: 'https://github.com/AntonCSalvador',
+  linkedin: 'https://www.linkedin.com/in/antoncsalvador',
 };

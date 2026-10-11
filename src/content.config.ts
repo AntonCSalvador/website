@@ -1,6 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
+import { globSync } from 'node:fs';
 
 const projects = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
@@ -14,7 +15,10 @@ const projects = defineCollection({
 });
 
 const blog = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/blog' }),
+  // Zero posts is intentional. Restart dev after adding the first Markdown post.
+  loader: globSync('src/content/blog/**/*.md').length
+    ? glob({ pattern: '**/*.md', base: './src/content/blog' })
+    : async () => [],
   schema: z.object({
     title: z.string(),
     description: z.string(),
