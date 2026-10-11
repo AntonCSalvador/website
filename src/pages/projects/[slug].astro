@@ -1,0 +1,20 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Arrow from '../../components/Arrow.astro';
+
+export async function getStaticPaths() {
+  return (await getCollection('projects')).map((project) => ({ params: { slug: project.id }, props: { project } }));
+}
+interface Props { project: CollectionEntry<'projects'> }
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+<Layout title={`${project.data.title} — Anton Salvador`} description={project.data.summary}>
+  <article class="article-page container">
+    <a class="text-link back-link" href="/#projects"><Arrow direction="left" /> Back to projects</a>
+    <header class="article-header"><h1>{project.data.title}</h1><p class="article-summary">{project.data.summary}</p><p class="project-role">{project.data.role}</p><ul class="technology-list" aria-label="Technologies">{project.data.technologies.map((technology) => <li>{technology}</li>)}</ul></header>
+    <div class="prose"><Content /></div>
+    <a class="text-link article-end" href="/#contact">Say hello <Arrow /></a>
+  </article>
+</Layout>

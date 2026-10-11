@@ -1,0 +1,64 @@
+---
+import '@fontsource-variable/bricolage-grotesque';
+import '../styles/global.css';
+import { site } from '../data/site';
+import Arrow from '../components/Arrow.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = `${site.name} — AI Engineer & Builder`,
+  description = 'I build AI tools at D&B. Explore my projects, community work, writing, and travels.',
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, site.url);
+const home = Astro.url.pathname === '/';
+const links = [
+  { label: 'Projects', href: `${home ? '' : '/'}#projects` },
+  { label: 'Blog', href: `${home ? '' : '/'}#blog` },
+  { label: 'Travel', href: `${home ? '' : '/'}#travel` },
+  { label: 'About', href: `${home ? '' : '/'}#about` },
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#edf4eb" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="/" aria-label="Anton Salvador, home">
+          <svg class="brand-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M3 26 16 5l13 21H3Z" fill="currentColor"/><path d="m12 26 4-9 4 9" fill="#f7b76b"/></svg>
+          <span>Anton Salvador<span class="brand-dot">.</span></span>
+        </a>
+        <nav class="desktop-nav" aria-label="Main navigation">
+          {links.map((link) => <a href={link.href}>{link.label}</a>)}
+          <a class="nav-contact" href={`${home ? '' : '/'}#contact`}>Say hello <Arrow /></a>
+        </nav>
+        <details class="mobile-menu">
+          <summary>Menu <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 5h12M3 9h12M3 13h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></summary>
+          <nav aria-label="Mobile navigation">
+            {links.map((link) => <a href={link.href}>{link.label}</a>)}
+            <a href={`${home ? '' : '/'}#contact`}>Say hello</a>
+          </nav>
+        </details>
+      </div>
+    </header>
+    <main id="main"><slot /></main>
+    <footer class="site-footer">
+      <div class="container footer-inner"><a class="footer-name" href="/">Anton Salvador.</a><p>Built with curiosity. Made to be used.</p><a class="text-link" href="#main">Back to top <Arrow direction="up" /></a></div>
+    </footer>
+  </body>
+</html>

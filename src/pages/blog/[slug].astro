@@ -1,0 +1,16 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { publishedPosts } from '../../lib/publication';
+import Arrow from '../../components/Arrow.astro';
+
+export async function getStaticPaths() {
+  return publishedPosts(await getCollection('blog')).map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+interface Props { post: CollectionEntry<'blog'> }
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+<Layout title={`${post.data.title} — Anton Salvador`} description={post.data.description}>
+  <article class="article-page container"><a class="text-link back-link" href="/blog/"><Arrow direction="left" /> All writing</a><header class="article-header"><h1>{post.data.title}</h1><p class="article-summary">{post.data.description}</p><time datetime={post.data.publicationDate.toISOString()}>{post.data.publicationDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}</time></header><div class="prose"><Content /></div></article>
+</Layout>
