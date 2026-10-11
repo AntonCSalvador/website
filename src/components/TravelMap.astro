@@ -3,6 +3,7 @@ import { trips } from '../data/trips';
 import { project, polygonPath } from '../lib/travel-geography';
 import geography from '../assets/travel/geography.json';
 import hiker from '../assets/travel/hiker.webp';
+import PhotoGallery from './PhotoGallery.astro';
 
 const regions: Record<string, string> = {
   boston: 'Massachusetts', cincinnati: 'Ohio', orlando: 'Florida', toronto: 'Ontario', iceland: 'Country visit',
@@ -38,9 +39,10 @@ const labels: Record<string, string> = { boston: 'Boston, Massachusetts', cincin
       <div class="trip-panels">
         {trips.map((trip) => <section id={`trip-${trip.id}`} class="trip-panel" aria-labelledby={`trip-heading-${trip.id}`} data-trip-panel={trip.id}>
           <div class="trip-heading"><h3 id={`trip-heading-${trip.id}`}>{trip.name}</h3><p>{regions[trip.id]} <span>· {trip.year}</span></p></div>
-          <div class="trip-empty">
-            <div class="hiker-trail" aria-hidden="true"><svg viewBox="0 0 230 34"><path d="M8 25C36 2 57 33 88 18S146 4 175 20 202 23 222 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="1 9" /></svg><img class="hiker" src={hiker.src} width={hiker.width} height={hiker.height} alt="" loading="lazy" /></div>
-            <p>Photos coming soon</p><p class="trip-empty-detail">A little space for the memories.</p>
+          <div class:list={['trip-gallery', { 'trip-empty': !trip.photos.length }]}>
+            {!trip.photos.length && <div class="hiker-trail" aria-hidden="true"><svg viewBox="0 0 230 34"><path d="M8 25C36 2 57 33 88 18S146 4 175 20 202 23 222 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="1 9" /></svg><img class="hiker" src={hiker.src} width={hiker.width} height={hiker.height} alt="" loading="lazy" /></div>}
+            <PhotoGallery tripId={trip.id} photos={trip.photos} />
+            {!trip.photos.length && <p class="trip-empty-detail">A little space for the memories.</p>}
           </div>
           {trip.note && <p class="trip-note">{trip.note}</p>}
         </section>)}
@@ -93,7 +95,6 @@ const labels: Record<string, string> = { boston: 'Boston, Massachusetts', cincin
   .trip-heading > p { margin-top: .65rem; font-size: .87rem; color: var(--ink-soft); }
   .trip-heading > p span { white-space: nowrap; }
   .trip-empty { margin-top: 4rem; }
-  .trip-empty > p { font-size: 1.14rem; font-weight: 650; margin-top: .85rem; }
   .trip-empty > .trip-empty-detail { font-size: .88rem; font-weight: 450; color: var(--ink-soft); margin-top: .4rem; }
   .hiker-trail { position: relative; max-width: 230px; height: 74px; color: #6e866c; }
   .hiker-trail svg { position: absolute; bottom: 2px; width: 100%; height: 34px; }

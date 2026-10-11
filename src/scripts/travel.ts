@@ -35,7 +35,8 @@ export function initializeTravel(): void {
     panels.forEach((item) => { item.hidden = item !== panel; });
     controls.forEach((control) => control.setAttribute('aria-pressed', String(control.dataset.tripSelect === id)));
     mapView(pin);
-    if (status) status.textContent = `${panel.querySelector('h3')?.textContent}, 2026. Photos coming soon.`;
+    const photoCount = panel.querySelectorAll('.photo-link').length;
+    if (status) status.textContent = `${panel.querySelector('h3')?.textContent}, 2026. ${photoCount ? `${photoCount} photo${photoCount === 1 ? '' : 's'}.` : 'Photos coming soon.'}`;
     const hiker = panel.querySelector<HTMLElement>('.hiker');
     if (hiker && !reducedMotion.matches) {
       animations = [hiker.animate([
