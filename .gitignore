@@ -1,0 +1,38 @@
+# Dependencies and generated site files
+node_modules/
+dist/
+.astro/
+.vercel/
+coverage/
+*.tsbuildinfo
+
+# Environment files and local credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Browser test output
+playwright-report/
+playwright/.cache/
+test-results/
+blob-report/
+
+# Local agent workspaces and design previews
+.superpowers/
+.worktrees/
+.impeccable/
+
+# Private source material and planning notes (not site content)
+/AntonSalvadorResume.pdf
+/outreachmessagestemp.txt
+/PRODUCT.md
+/docs/superpowers/
+/projects/
+
+# Logs and operating-system files
+*.log
+.DS_Store
+Thumbs.db
+Desktop.ini
