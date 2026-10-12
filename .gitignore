@@ -25,6 +25,7 @@ blob-report/
 .impeccable/
 
 # Private source material and planning notes (not site content)
+/incoming/
 /AntonSalvadorResume.pdf
 /outreachmessagestemp.txt
 /PRODUCT.md

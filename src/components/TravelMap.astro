@@ -1,0 +1,130 @@
+---
+import type { Trip } from '../data/trips';
+import { project, polygonPath } from '../lib/travel-geography';
+import geography from '../assets/travel/geography.json';
+import hiker from '../assets/travel/hiker.webp';
+import PhotoGallery from './PhotoGallery.astro';
+
+interface Props { trips: Trip[] }
+const { trips } = Astro.props;
+
+const regions: Record<string, string> = {
+  boston: 'Massachusetts', cincinnati: 'Ohio', orlando: 'Florida', toronto: 'Ontario', iceland: 'Country visit',
+};
+const labels: Record<string, string> = { boston: 'Boston, Massachusetts', cincinnati: 'Cincinnati, Ohio', orlando: 'Orlando, Florida', toronto: 'Toronto, Ontario', iceland: 'Iceland' };
+---
+<section id="travel" class="section travel-section" aria-labelledby="travel-title" data-travel-map>
+  <div class="container">
+    <div class="section-heading"><h2 id="travel-title">2026 travels</h2><p>Places I've visited this year. Photos and stories to come.</p></div>
+    <div class="travel-layout">
+      <div class="travel-atlas">
+        <div class="atlas-heading"><p>2026 <span>· Five destinations</span></p><button class="map-overview" type="button" hidden>Show all destinations</button></div>
+        <div class="map-window" aria-label="Map of eastern North America through Iceland">
+          <svg class="travel-geography" viewBox="0 0 1000 760" preserveAspectRatio="none" aria-hidden="true">
+            <g class="map-land">
+              {geography.map((country) => <path d={polygonPath(country.polygons)} data-country={country.name} />)}
+            </g>
+            <g class="map-place-labels"><text x="158" y="320">CANADA</text><text x="64" y="577">UNITED STATES</text><text x="525" y="75">GREENLAND</text><text class="ocean-label" x="610" y="458">North Atlantic</text><text class="ocean-label" x="665" y="486">Ocean</text></g>
+          </svg>
+          {trips.map((trip) => {
+            const [x, y] = project(trip.longitude, trip.latitude);
+            return <a class={`map-pin pin-${trip.id}`} href={`#trip-${trip.id}`} data-trip-select={trip.id} data-x={x} data-y={y} style={`--pin-x:${x / 10}%;--pin-y:${y / 7.6}%`} aria-label={`Select ${trip.name}`}>
+              <span class="pin-dot" aria-hidden="true"></span><span class="pin-name" aria-hidden="true">{trip.name}</span>
+            </a>;
+          })}
+          <svg class="map-north" viewBox="0 0 24 44" aria-hidden="true"><path d="m12 18-6 17 6-5 6 5-6-17Z" fill="currentColor"/><text x="12" y="11" text-anchor="middle" fill="currentColor">N</text></svg>
+        </div>
+        <p class="map-caption">Select a place to take a look. <a href="https://www.naturalearthdata.com/about/terms-of-use/">Map: Natural Earth</a></p>
+        <nav aria-label="Travel destinations"><ul class="destination-list">
+          {trips.map((trip) => <li><a href={`#trip-${trip.id}`} data-trip-select={trip.id} aria-controls={`trip-${trip.id}`}><span class="list-dot" aria-hidden="true"></span>{labels[trip.id]}</a></li>)}
+        </ul></nav>
+      </div>
+      <div class="trip-panels">
+        {trips.map((trip) => <section id={`trip-${trip.id}`} class="trip-panel" aria-labelledby={`trip-heading-${trip.id}`} data-trip-panel={trip.id}>
+          <div class="trip-heading"><h3 id={`trip-heading-${trip.id}`}>{trip.name}</h3><p>{regions[trip.id]} <span>· {trip.year}</span></p></div>
+          <div class:list={['trip-gallery', { 'trip-empty': !trip.photos.length }]}>
+            <div class="hiker-trail" aria-hidden="true"><svg viewBox="0 0 230 34"><path d="M8 25C36 2 57 33 88 18S146 4 175 20 202 23 222 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="1 9" /></svg><img class="hiker" src={hiker.src} width={hiker.width} height={hiker.height} alt="" loading="lazy" /></div>
+            <PhotoGallery tripId={trip.id} photos={trip.photos} />
+            {!trip.photos.length && <p class="trip-empty-detail">A little space for the memories.</p>}
+          </div>
+          {trip.note && <p class="trip-note">{trip.note}</p>}
+        </section>)}
+        <p class="trip-selection-status sr-only" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initializeTravel } from '../scripts/travel';
+  initializeTravel();
+</script>
+
+<style>
+  .travel-layout { display: grid; grid-template-columns: minmax(0, 2.15fr) minmax(230px, 1fr); gap: 3rem; align-items: start; }
+  .atlas-heading { display: flex; justify-content: space-between; align-items: center; min-height: 52px; gap: 1rem; padding-bottom: .8rem; }
+  .atlas-heading p { font-weight: 700; font-size: .93rem; }
+  .atlas-heading p span { font-weight: 450; color: var(--ink-soft); }
+  .map-overview { color: var(--ink); background: transparent; border: 1px solid #839b89; border-radius: 6px; padding: .45rem .75rem; font-size: .8rem; min-height: 44px; }
+  .map-overview[hidden] { display: none; }
+  .map-overview:hover { background: var(--paper); }
+  .map-window { height: auto; aspect-ratio: 1000 / 760; position: relative; overflow: hidden; background: #eeecf3; border-radius: var(--radius); isolation: isolate; }
+  .travel-geography { width: 100%; height: 100%; position: absolute; inset: 0; }
+  .map-land { fill: #faf9f6; stroke: #c4bfd0; stroke-width: 1.25; transform-origin: 0 0; }
+  .map-land path { vector-effect: non-scaling-stroke; }
+  .map-place-labels { fill: #605c6e; font-size: 15px; letter-spacing: 2px; font-weight: 600; }
+  .map-place-labels .ocean-label { fill: #605c6e; font-size: 19px; font-weight: 450; letter-spacing: 1px; }
+  .map-pin { position: absolute; left: var(--pin-x); top: var(--pin-y); width: 44px; height: 44px; transform: translate(-50%, -50%); display: flex; justify-content: center; align-items: center; color: var(--ink); text-decoration: none; z-index: 2; }
+  .pin-dot { width: 13px; height: 13px; border-radius: 50%; border: 3px solid var(--paper); background: var(--ink); box-shadow: 0 1px 5px #234c3e38; }
+  .pin-name { position: absolute; left: calc(50% + 13px); top: 11px; font-size: .78rem; font-weight: 650; line-height: 1.1; white-space: nowrap; background: #f8f7ebed; padding: 3px 5px; border-radius: 3px; }
+  .pin-toronto .pin-name, .pin-cincinnati .pin-name { left: auto; right: calc(50% + 13px); }
+  .pin-iceland .pin-name { top: -7px; left: 50%; transform: translateX(-50%); }
+  .pin-orlando .pin-name { top: 18px; }
+  .map-pin:hover .pin-dot, .map-pin[aria-pressed="true"] .pin-dot { background: var(--orange); }
+  .map-pin[aria-pressed="true"] { z-index: 3; }
+  .map-pin[aria-pressed="true"] .pin-name { color: var(--paper); background: var(--orange); }
+  .map-pin:focus-visible { outline-offset: 0; border-radius: 50%; }
+  .map-north { position: absolute; bottom: 18px; right: 18px; width: 22px; height: 40px; color: #456762; }
+  .map-caption { font-size: .76rem; color: var(--ink-soft); display: flex; justify-content: space-between; gap: .5rem; margin-top: .7rem; }
+  .map-caption a { font-size: .7rem; white-space: nowrap; }
+  .destination-list { padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: .2rem 1.3rem; margin-top: 1.3rem; }
+  .destination-list a { display: flex; align-items: center; gap: .55rem; min-height: 44px; font-size: .86rem; text-decoration: none; }
+  .destination-list a:hover, .destination-list a[aria-pressed="true"] { color: var(--orange); text-decoration: underline; }
+  .list-dot { width: 6px; height: 6px; background: currentColor; border-radius: 50%; flex-shrink: 0; }
+  .trip-panels { padding-top: 52px; }
+  .trip-panel { padding-block: 1.8rem; border-top: 1px solid #b4c3aa; }
+  .trip-panel[hidden] { display: none; }
+  .trip-heading h3 { font-size: 1.5rem; }
+  .trip-heading > p { margin-top: .65rem; font-size: .87rem; color: var(--ink-soft); }
+  .trip-heading > p span { white-space: nowrap; }
+  .trip-empty { margin-top: 4rem; }
+  .trip-empty > .trip-empty-detail { font-size: .88rem; font-weight: 450; color: var(--ink-soft); margin-top: .4rem; }
+  .hiker-trail { position: relative; max-width: 230px; height: 74px; color: #6e866c; }
+  .hiker-trail svg { position: absolute; bottom: 2px; width: 100%; height: 34px; }
+  .hiker { position: absolute; bottom: 13px; left: 22px; height: 56px; width: auto; }
+  .trip-note { margin-top: 2rem; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+  @media (prefers-reduced-motion: no-preference) {
+    [data-enhanced] .map-land, [data-enhanced] .map-place-labels { transition: transform 500ms cubic-bezier(.16, 1, .3, 1); }
+    [data-enhanced] .map-pin { transition: left 500ms cubic-bezier(.16, 1, .3, 1), top 500ms cubic-bezier(.16, 1, .3, 1); }
+  }
+  @media (max-width: 900px) { .travel-layout { gap: 2rem; grid-template-columns: minmax(0, 1.9fr) minmax(210px, 1fr); } .pin-name { font-size: .7rem; } }
+  @media (max-width: 680px) {
+    .travel-layout { grid-template-columns: 1fr; gap: 2rem; }
+    .map-window { aspect-ratio: 1 / 1.03; }
+    .atlas-heading p span { font-size: .8rem; }
+    .map-overview { font-size: .72rem; padding-inline: .5rem; }
+    .map-place-labels { font-size: 22px; letter-spacing: 1px; }
+    .map-place-labels .ocean-label { font-size: 27px; }
+    .pin-name { font-size: .72rem; }
+    .pin-toronto .pin-name { top: -12px; left: 50%; right: auto; transform: translateX(-50%); }
+    .pin-boston .pin-name { top: 19px; }
+    .pin-cincinnati .pin-name { left: calc(50% + 13px); right: auto; top: 28px; }
+    .map-caption { flex-wrap: wrap; font-size: .72rem; }
+    .destination-list { display: grid; grid-template-columns: 1fr 1fr; gap: .15rem 1rem; margin-top: 1rem; }
+    .destination-list a { font-size: .8rem; }
+    .trip-panels { padding-top: 0; }
+    .trip-panel { padding-top: 1.7rem; }
+    .trip-empty { margin-top: 2rem; }
+  }
+</style>

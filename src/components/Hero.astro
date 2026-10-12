@@ -1,0 +1,38 @@
+---
+import { site } from '../data/site';
+import frames from '../data/hero-frames.json';
+import Arrow from './Arrow.astro';
+const glyphs = '@%#*+=-:. ';
+const rows = Array.from({length:108}, (_,y) => frames[0].tones.slice(y*144,(y+1)*144).split('').map(t=>glyphs[Number(t)]).join(''));
+---
+<section class="hero container" aria-labelledby="hero-title" data-motion="paused">
+  <div class="hero-copy">
+    <h1 id="hero-title">Anton Salvador</h1>
+    <p class="hero-credentials">AI Engineer at Dun &amp; Bradstreet · UF alum</p>
+    <p class="hero-description">I build software and AI agents.</p>
+    <p>Currently working on agentic AI systems: MCPs, evals, observability, permissions, and all the fun stuff that makes agents actually work in production.</p>
+    <div class="hero-links">
+      {site.email && <a href={`mailto:${site.email}`}>Email</a>}
+      {site.github && <a href={site.github}>GitHub</a>}
+      {site.linkedin && <a href={site.linkedin}>LinkedIn</a>}
+    </div>
+    <a class="text-link hero-work" href="#projects">Explore my work <Arrow direction="down-right" /></a>
+  </div>
+  <figure class="ascii-figure">
+    <div class="ascii-stage">
+      <svg class="ascii-static" viewBox="0 0 840 630" role="img" aria-label={`ASCII photograph: ${frames[0].label}`}>
+        {rows.map((row,y)=><text x="3" y={(y+.5)*630/108} textLength="834" lengthAdjust="spacing" dominant-baseline="middle" xml:space="preserve">{row}</text>)}
+      </svg>
+      <canvas class="ascii-canvas" width="840" height="630" role="img" aria-label={`ASCII photograph: ${frames[0].label}`} hidden></canvas>
+    </div>
+    <figcaption class="ascii-controls" hidden>
+      <button type="button" class="motion-toggle" aria-label="Play animation" aria-pressed="false">Play animation</button>
+      <span class="photo-position">1 / {frames.length}</span>
+      <button type="button" class="next-photo" aria-label="Next photo">Next photo <Arrow /></button>
+    </figcaption>
+  </figure>
+</section>
+<script>
+  import { initializeHeroMotion } from '../scripts/motion';
+  initializeHeroMotion();
+</script>

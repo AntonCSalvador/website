@@ -1,0 +1,17 @@
+---
+// Browser-only fixture copied into src/pages by gallery.browser.ts, then removed.
+import Layout from '../layouts/Layout.astro';
+import TravelMap from '../components/TravelMap.astro';
+import PhotoGallery from '../components/PhotoGallery.astro';
+import { trips } from '../data/trips';
+
+const photo = { src: '/__gallery-test.svg', alt: 'Synthetic green rectangle for browser testing', width: 960, height: 640, caption: 'Test fixture — not a travel photo.' };
+const fixtureTrips = trips.map((trip) => ({ ...trip, photos: trip.id === 'boston' ? [photo] : [] }));
+---
+<Layout title="Gallery browser test">
+  <TravelMap trips={fixtureTrips} />
+  <section id="test-fixtures" aria-label="Browser test fixtures">
+    <PhotoGallery tripId="empty" photos={[]} />
+    <PhotoGallery tripId="missing-source" photos={[{ ...photo, src: '' }]} />
+  </section>
+</Layout>

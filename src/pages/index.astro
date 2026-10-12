@@ -1,0 +1,55 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import Writing from '../components/Writing.astro';
+import TravelSection from '../components/TravelSection.astro';
+import { site } from '../data/site';
+import Arrow from '../components/Arrow.astro';
+const projects = (await getCollection('projects')).sort((a,b)=>a.data.order-b.data.order);
+---
+<Layout>
+  <Hero />
+  <section id="projects" class="section work-section" aria-labelledby="work-title">
+    <div class="container">
+      <h2 id="work-title">Selected projects</h2>
+      <div class="project-list">
+        {projects.map(project=><article class="project-row">
+          <h3><a href={`/projects/${project.id}/`}>{project.data.title}</a></h3>
+          <p class="project-role">{project.data.role}</p>
+          <div class="project-story">
+            {project.id==='internal-ai-platform' ? <><p>I own and lead the engineering of an internal AI platform at Dun &amp; Bradstreet, from custom MCPs to role-based access, observability, and human-in-the-loop workflows.</p><p class="project-result">Built for production, and part of my colleagues' day.</p></> : project.id==='rewala' ? <><p>I cofounded a B2B loyalty platform and helped build it from the first idea to real use.</p><p class="project-result">5+ business clients · 300+ active users · $11,000+ in rewards-driven sales</p></> : <p>{project.data.summary}</p>}
+          </div>
+          <ul class="technology-list" aria-label="Technologies">{project.data.technologies.map(technology=><li>{technology}</li>)}</ul>
+          <a class="text-link" href={`/projects/${project.id}/`}>Read the project <Arrow /></a>
+        </article>)}
+      </div>
+    </div>
+  </section>
+  <div class="container personal-grid">
+    <section id="about" class="section" aria-labelledby="about-title">
+      <h2 id="about-title">Community</h2>
+      <div class="about-story">
+        <p>At UF, I grew our Open Source Club from 4 to 300+ members and organized the university's first open source hackathon, with 200+ participants.</p>
+        <p>One of my proudest moments was helping 30 kids build and publish their first websites at a free HTML/CSS workshop.</p>
+      </div>
+    </section>
+    <section id="blog" class="section writing-section" aria-labelledby="writing-title">
+      <h2 id="writing-title">Writing</h2><Writing onHomepage />
+    </section>
+  </div>
+  <section id="gaming" class="section" aria-labelledby="gaming-title">
+    <div class="container">
+      <h2 id="gaming-title">Off the clock</h2>
+      <p class="section-intro">Outside of building things, I watch films, travel, and play a few games.</p>
+      <div class="gaming-grid">
+        <article><h3>Teamfight Tactics <span>· Masters</span></h3><p>Double Up, Set 16 · Top 0.77% NA</p><a class="text-link" href="https://tactics.tools/player/na/BAGSANDER/2427">TFT profile <Arrow /></a></article>
+        <article><h3>Fortnite <span>· Unreal</span></h3><p>Chapter 7, Season 1 · Peak #10,383</p><a class="text-link" href="https://fortnitetracker.com/fortnite/profile/epic/P0NCH0%20GUY/matchmaking/overview">Fortnite profile <Arrow /></a></article>
+      </div>
+    </div>
+  </section>
+  <TravelSection />
+  <section id="contact" class="section contact-section" aria-labelledby="contact-title">
+    <div class="container contact-inner"><div><h2 id="contact-title">Say hello</h2><p>Have a project in mind, or just want to talk software and AI?</p></div><div class="contact-links">{site.email && <a class="text-link" href={`mailto:${site.email}`}>Email me <Arrow /></a>}{site.linkedin && <a class="text-link" href={site.linkedin}>LinkedIn <Arrow /></a>}</div></div>
+  </section>
+</Layout>

@@ -1,0 +1,47 @@
+---
+import type { TripPhoto } from '../data/trips';
+
+interface Props { tripId: string; photos: TripPhoto[] }
+const { tripId, photos } = Astro.props;
+const availablePhotos = photos.filter((photo) => photo.src.trim());
+---
+<div class="photo-gallery" data-photo-gallery={tripId}>
+  {availablePhotos.length ? <>
+    <ul class="photo-thumbnails">
+      {availablePhotos.map((photo) => <li><figure>
+        <a class="photo-link" href={photo.src}>
+          <img src={photo.src} alt={photo.alt} width={photo.width} height={photo.height} loading="lazy" decoding="async" />
+        </a>
+        {photo.caption && <figcaption>{photo.caption}</figcaption>}
+      </figure></li>)}
+    </ul>
+    <dialog class="photo-dialog" aria-label="Enlarged travel photo">
+      <button class="photo-close" type="button" autofocus>Close photo</button>
+      <figure><img class="photo-enlarged" alt="" /><figcaption class="photo-caption"></figcaption></figure>
+      <p class="photo-error" role="status" hidden>This photo couldn't load. Close it and try opening it again.</p>
+    </dialog>
+  </> : <p class="photo-empty">Photos coming soon</p>}
+</div>
+
+<script>
+  import { initializeGalleries } from '../scripts/gallery';
+  initializeGalleries();
+</script>
+
+<style>
+  .photo-thumbnails { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr)); gap: 1.1rem; margin-top: 1.8rem; }
+  figure { margin: 0; }
+  .photo-link { display: block; border-radius: 8px; overflow: hidden; }
+  .photo-link img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; background: var(--cream); }
+  .photo-link:hover { outline: 2px solid var(--orange); outline-offset: 3px; }
+  figcaption { margin-top: .6rem; color: var(--ink-soft); font-size: .85rem; line-height: 1.5; }
+  .photo-empty { font-size: 1.14rem; font-weight: 650; margin-top: .85rem; }
+  .photo-dialog { width: min(1000px, calc(100% - 2rem)); max-width: none; max-height: calc(100dvh - 2rem); padding: 1.2rem; border: 0; border-radius: var(--radius); color: var(--ink); background: var(--paper); box-shadow: 0 18px 60px #173d3052; }
+  .photo-dialog::backdrop { background: #173d30d9; }
+  .photo-close { display: block; margin: 0 0 1rem auto; min-height: 44px; padding: .5rem .85rem; border: 0; border-radius: 6px; background: var(--ink); color: var(--paper); font-weight: 650; }
+  .photo-close:hover { background: #17382d; }
+  .photo-enlarged { width: auto; height: auto; max-width: 100%; max-height: calc(100dvh - 13rem); margin-inline: auto; object-fit: contain; }
+  .photo-enlarged[hidden], .photo-error[hidden] { display: none; }
+  .photo-error { padding: 1.5rem 0; }
+  @media (max-width: 680px) { .photo-dialog { padding: 1rem; } }
+</style>
