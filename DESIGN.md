@@ -1,75 +1,63 @@
 ---
 name: "Anton Salvador"
-description: "A relaxed outdoor home for engineering work, writing, and travel."
+description: "A quiet personal engineering website with monochrome ASCII photography."
 colors:
-  ink: "#234c3e"
-  ink-soft: "#496354"
-  paper: "#fbf9f1"
-  cream: "#f5efde"
-  sage: "#edf4eb"
-  orange: "#b84d27"
-  line: "#d7ddd0"
-  hero-sky: "#bfe5f6"
-  travel-ground: "#eef2e4"
-  primary-hover: "#17382d"
+  ink: "#252332"
+  ink-soft: "#605c6e"
+  paper: "#faf9f6"
+  cream: "#f0eef3"
+  orange: "#6751a5"
+  line: "#dedbe3"
 typography:
   display:
     fontFamily: "'Bricolage Grotesque Variable', sans-serif"
-    fontSize: "clamp(2.7rem, 5.4vw, 5.1rem)"
-    fontWeight: 750
-    lineHeight: 1.07
-    letterSpacing: "-.035em"
+    fontSize: "clamp(2rem, 3vw, 2.65rem)"
+    fontWeight: 650
+    lineHeight: 1.2
+    letterSpacing: "-.025em"
   headline:
     fontFamily: "'Bricolage Grotesque Variable', sans-serif"
-    fontSize: "clamp(2.3rem, 4vw, 3.6rem)"
-    fontWeight: 750
-    lineHeight: 1.07
-    letterSpacing: "-.035em"
+    fontSize: "1.45rem"
+    fontWeight: 650
+    lineHeight: 1.2
+    letterSpacing: "-.025em"
   title:
     fontFamily: "'Bricolage Grotesque Variable', sans-serif"
-    fontSize: "clamp(1.7rem, 2.2vw, 2.2rem)"
-    fontWeight: 750
-    lineHeight: 1.07
-    letterSpacing: "-.035em"
+    fontSize: "1.12rem"
+    fontWeight: 650
+    lineHeight: 1.2
+    letterSpacing: "-.025em"
   body:
     fontFamily: "'Bricolage Grotesque Variable', sans-serif"
-    fontSize: "1.0625rem"
+    fontSize: "1rem"
     lineHeight: 1.65
   label:
     fontFamily: "'Bricolage Grotesque Variable', sans-serif"
-    fontSize: "1rem"
-    fontWeight: 650
+    fontSize: ".88rem"
 rounded:
-  control: "8px"
-  surface: "14px"
+  surface: "8px"
   compact-control: "6px"
 spacing:
-  column: "5rem"
-  section: "6.5rem"
-  section-tablet: "5rem"
-  section-mobile: "4rem"
+  column: "3rem"
+  column-tablet: "2rem"
+  section: "2.6rem"
+  section-mobile: "1.8rem"
 components:
-  button-primary:
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.paper}"
-    typography: "{typography.label}"
-    rounded: "{rounded.control}"
-    padding: ".8rem 1.35rem"
-  button-primary-hover:
-    backgroundColor: "{colors.primary-hover}"
   text-link:
-    textColor: "{colors.ink}"
-    typography: "{typography.label}"
-  text-link-hover:
     textColor: "{colors.orange}"
-  map-overview:
-    textColor: "{colors.ink}"
+    typography: "{typography.label}"
+  motion-toggle:
     backgroundColor: "transparent"
+    textColor: "{colors.ink-soft}"
+    padding: ".5rem 0"
+  map-overview:
+    backgroundColor: "transparent"
+    textColor: "{colors.ink}"
     rounded: "{rounded.compact-control}"
     padding: ".45rem .75rem"
   photo-close:
-    textColor: "{colors.paper}"
     backgroundColor: "{colors.ink}"
+    textColor: "{colors.paper}"
     rounded: "{rounded.compact-control}"
     padding: ".5rem .85rem"
 ---
@@ -78,87 +66,86 @@ components:
 
 ## Overview
 
-**Creative North Star: "The illustrated outdoor basecamp"**
+**Creative North Star: "The quiet personal engineering website"**
 
-Relaxed, distinctive, simple, and technical. Pale sky, evergreen lettering, warm ground, and campsite orange establish the outdoor character selected by Anton. Friendly substantial sans lettering and tactile but restrained controls carry that character into readable content.
+Off-white ground, charcoal text, muted violet links, and compact sans typography establish a relaxed, simple, technical identity. Thin dividers and open columns give real engineering work and personal interests room without oversized slogans or decorative cards. This approved world replaces the illustrated outdoor identity.
 
-Illustration supplies atmosphere; quiet lower sections give engineering evidence and writing room. The shared system is light, spacious, and grounded in real content. Homepage composition and the geographic travel concept remain in their surface brief rather than becoming requirements for every page.
+Monochrome ASCII photography supplies the distinctive personal texture. Its movement is restrained and optional; live text, links, and content remain readable independently. Homepage composition belongs to the approved surface brief.
 
 **Key Characteristics:**
 
-- Substantial evergreen typography on warm light surfaces.
-- Quiet divided rows instead of a repeated card grid.
-- Restrained rounded controls and selective, purposeful motion.
+- Compact charcoal typography and muted violet interaction accents.
+- Open columns, fine dividers, and flat off-white surfaces.
+- Personal photographs expressed as character data with optional motion.
 
 ## Colors
 
-The palette combines evergreen ink, warm paper, pale sage, and campsite orange. The frontmatter records canonical reused colors from the implementation.
+The frontmatter is the normative palette extracted from the shared stylesheet.
 
 ### Primary
 
-- **Evergreen ink:** main text, brand mark, primary actions, and unselected map pins. The deeper hover tone reinforces primary controls.
-- **Campsite orange:** link hover, visible focus, and selected map pins; a small accent that connects controls to the illustration.
+- **Muted violet:** links, keyboard focus, navigation hover, and selected map pins. The existing CSS variable name `--orange` now holds violet; it does not describe the current hue.
 
 ### Neutral
 
-- **Soft evergreen:** supporting text, credentials, metadata, and captions.
-- **Warm paper:** default page and floating-control background.
-- **Sunlit cream:** contact/footer surfaces and photo placeholders.
-- **Pale sage:** header, about section, code blocks, and menu hover.
-- **Quiet boundary:** dividers between project and writing rows.
-- **Open sky:** the hero background and readability wash.
-- **Travel ground:** the travel section's light green ground.
+- **Charcoal ink:** headings, brand name, content, and filled photo-close controls.
+- **Soft charcoal:** supporting copy, navigation, metadata, and animation controls.
+- **Off-white paper:** page ground, navigation panel, map land, and photo dialog.
+- **Pale lilac:** code blocks, thumbnail placeholders, and mobile menu hover.
+- **Quiet boundary:** shared header, section, and column dividers.
 
-The geographic map also has local water, land, boundary, and label colors in `TravelMap.astro`; these are map rendering details rather than global brand tokens.
+The retained map and gallery contain local map-water, boundary, label, shadow, and backdrop colors, including some earlier green details. These are component rendering details, not additional global brand accents.
 
 ## Typography
 
-Display, body, and controls share self-hosted Bricolage Grotesque Variable with a sans-serif fallback. Heavy, tightly spaced balanced headings sit above open body copy; paragraphs are capped at 70ch. There is no separate label or monospaced brand face.
+All page typography uses self-hosted Bricolage Grotesque Variable from `@fontsource-variable/bricolage-grotesque`, with a sans-serif fallback. Moderate weight and slightly tight headings support conversational, compact copy. The frontmatter records the base hierarchy; paragraphs cap at 70ch.
 
-The frontmatter defines the general heading hierarchy. The illustrated hero uses its own display clamp (`clamp(3.5rem, 5.4vw, 4.9rem)`) and a 15ch measure; below the phone breakpoint it becomes `clamp(2.8rem, 10vw, 4rem)`. Article titles use `clamp(2.7rem, 5.5vw, 4.5rem)` and an 18ch measure. Larger conversational copy uses `clamp(1.5rem, 2.4vw, 2rem)`, a 1.4 line height, and weight 600. Controls use weight 650; navigation uses weight 600.
+The introduction uses the display role for Anton's name, with supporting copy at .94rem and a 46ch measure. Project stories use .93rem; metadata and technology lists step down to .82rem and .76rem. Article summaries use 1.18rem with a 1.5 line height. The ASCII artwork alone uses bold monospace glyphs; this is an image rendering technique, not a second editorial typeface.
 
 ## Layout
 
-Content sits in a centered container capped at 1180px, with 5rem total horizontal subtraction on wide screens. The header independently caps at 1320px. At 900px the horizontal subtraction becomes 3rem; at 680px it becomes 2.5rem. Section spacing follows the wide/tablet/phone steps in the frontmatter.
+Shared content and the header cap at 1120px with 4rem total horizontal subtraction. The introduction is a centered split grid with .9fr copy and 1.1fr artwork, a 3.5rem gap, and 3.8rem/3rem vertical padding. Its artwork has a 4:3 aspect ratio.
 
-Section headings, project rows, about, and writing use two equal columns with the column spacing token, reducing to a 3rem gap at 900px and one column at 680px. Project rows use top dividers and generous vertical padding. Articles and the blog index cap at 900px, with prose capped at 70ch.
+Projects, community/writing, and gaming use equal columns, the column gap token, and fine vertical dividers. Shared sections use the frontmatter spacing with a top divider and 2rem inner top padding. Article and blog containers cap at 850px; article headings cap at 24ch.
 
-The travel atlas places the map beside a narrower destination panel, then stacks at 680px. Photo thumbnails use an auto-fit grid with a 140px minimum constrained to the available width. Header navigation becomes a native disclosure menu at 680px; contact links and footer content wrap. The hero separates live copy from deliberately cropped landscape artwork on phones.
+At 900px, introduction and content gaps reduce to 2rem. At 680px, horizontal subtraction becomes 2.5rem, introduction and content grids stack, vertical dividers become horizontal rules, and section inner top padding becomes 1.5rem. Intro text precedes artwork. Navigation becomes a native disclosure menu, contact content stacks, and the footer wraps.
+
+The retained geographic atlas uses a 2.15fr map beside a narrower trip panel, adjusts to 1.9fr at 900px, and stacks at 680px. Its map changes from 1000:760 to 1:1.03 on phones. Destination links become two columns; photo thumbnails use an auto-fit grid with a 140px minimum constrained to available width.
 
 ## Elevation & Depth
 
-Most content is flat: colored section grounds and fine dividers establish hierarchy. Shadows are confined to floating navigation, the motion control, map pins, the photo dialog, and the illustrated campfire glow. Their exact values are in the sidecar; there is no general raised-card treatment. The dialog uses a dark evergreen translucent backdrop. The hero uses layered artwork and a sky wash to preserve readable live text.
+The shared interface is flat. Fine rules and pale surface changes convey structure; neither the header nor the mobile menu has a shadow. The retained travel component confines shadows to destination dots and the enlarged-photo dialog, whose translucent backdrop supplies modal depth. Exact local shadows are recorded in the sidecar. ASCII glyph displacement is the introduction's only animated depth cue.
 
 ## Shapes
 
-Controls and photo thumbnails use the control radius; the map, menu, and photo dialog use the surface radius. Small map and gallery controls use the compact-control radius. Project stories stay open, separated by straight rules. Circular destination dots and the mountain brand mark are recurring small signatures. Focus uses a 3px orange outline with a 5px offset and 3px corners; map pins use circular focus with zero offset.
+Shared dividers are straight and thin. Map windows, mobile menus, photo thumbnails, and photo dialogs use the surface radius; map overview and photo-close controls use the compact-control radius. Destination dots remain circular. Global keyboard focus uses a 3px violet outline, a 5px offset, and 3px corners; map pins use circular focus with zero offset.
 
 ## Components
 
-**Primary actions and text links.** Filled evergreen actions carry warm paper text, a 52px minimum height, and the frontmatter padding. Primary hover deepens the fill; underlined text actions turn orange and have a 44px minimum height. Both retain the global focus treatment. No general animated button lift is implemented.
+**Text actions and navigation.** Violet underlined links use a 44px minimum height where implemented as text actions; hover thickens the underline. Desktop navigation uses .84rem soft charcoal text with violet underline on hover. The phone disclosure opens an off-white panel with a thin boundary and pale lilac item hover. Primary homepage actions are text links.
 
-**Navigation.** The name and mountain mark anchor a pale sage header. Desktop links have compact semibold type and orange hover; the contact link has a fine border and rounded corners. The phone menu uses native `details`/`summary`, with a floating paper panel and sage item hover. There is no separate persistent active-page style.
+**Open content columns.** Compact project headings precede role, story, outcome, and plain slash-separated technologies. Community and writing share the same open-column vocabulary. Honest empty writing content remains visible. There is no reusable card or input library.
 
-**Content rows.** Project titles and context occupy the left column, evidence and story the right. Technology labels are plain slash-separated text, not pill chips. Writing lists share the restrained divider vocabulary. No input fields or reusable card library are implemented.
+**ASCII photograph.** Seven supplied photographs become precomputed 144-column by 108-row tone strings. A 840 by 630 Canvas2D surface renders monochrome glyphs with a soft diagonal disassembly/reassembly wave: 1800ms transition and 3600ms hold, drawing at up to 30fps during transitions. Play/pause and next-photo controls have 44px targets. Reduced motion disables automatic animation and allows immediate manual advancement; scrolling offscreen and hidden tabs pause animation. Without JavaScript or a canvas context, the first photograph remains visible as accessible SVG text. Only derived character data ships, not the private originals or their metadata.
 
-**Geographic travel selector.** Real map pins have 44px targets and text labels. Hover/selection turns the pin orange; selected labels use paper on orange. The parallel destination list supports selection without relying on map positioning. The overview control is an outlined transparent button. Trip content remains available without the scripted enhancement.
+**2026 geographic travel selector.** The functioning map retains real destination positions, 44px pin targets, violet hover/selection, direct destination links, overview control, and decorative hiker. Map transitions use 500ms with `cubic-bezier(.16, 1, .3, 1)` only when motion is allowed. Trip content stays available without scripted enhancement, and decoration does not delay ready content.
 
-**Photo gallery.** Rounded 3:2 thumbnails open a native dialog; an orange outline marks hover. The paper dialog fits within the viewport and uses a compact evergreen close button. Empty galleries say "Photos coming soon"; failed photos expose a retry instruction. Actual trip photographs remain content, not decorative stock imagery.
-
-**Ambient motion.** Cloud drift and campfire flicker run only when allowed by motion preference and the page/hero visibility controls. A labeled pause control persists the choice during scrolling. Map transitions last 500ms with `cubic-bezier(.16, 1, .3, 1)` when reduced motion is not requested; the decorative hiker does not delay ready content.
+**Photo gallery.** Rounded 3:2 thumbnails open a native off-white dialog with a charcoal close action. Hover uses a violet outline. Empty galleries say "Photos coming soon"; failed photos expose a retry instruction. Photographs remain content, not decorative stock imagery.
 
 ## Do's and Don'ts
 
 ### Do:
 
-- Do use substantial evergreen headings, warm light surfaces, and restrained orange interaction accents.
-- Do keep project evidence and prose readable through open rows, clear dividers, and the established content measures.
-- Do retain visible keyboard focus, disclosure navigation, direct destination links, and reduced-motion behavior.
+- Do use compact charcoal headings, off-white surfaces, and muted violet links.
+- Do preserve readable content measures, open columns, and fine dividers.
+- Do retain visible keyboard focus, disclosure navigation, manual photo controls, and reduced-motion behavior.
+- Do keep ASCII data separate from private source photographs and retain the SVG text fallback.
 - Do use real geographic destination positions and honest empty galleries.
 
 ### Don't:
 
-- Don't turn the open project rows into a general raised-card grid.
-- Don't bake headings, credentials, or actions into illustration assets.
-- Don't present placeholder travel images as Anton's photographs or imply a route or chronology that the content does not establish.
-- Don't delay available content to play a decorative travel transition.
+- Don't restore the discarded illustrated outdoor hero or oversized slogans.
+- Don't turn open content columns into a raised-card grid.
+- Don't bake biography, credentials, or actions into artwork.
+- Don't present placeholder travel images as Anton's photographs or infer routes or chronology.
+- Don't delay available content to play a decorative transition.

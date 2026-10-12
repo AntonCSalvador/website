@@ -1,31 +1,36 @@
 ---
+import { site } from '../data/site';
+import frames from '../data/hero-frames.json';
 import Arrow from './Arrow.astro';
-import basecamp from '../assets/hero/basecamp.webp';
-import basecamp640 from '../assets/hero/basecamp-640.webp';
-import basecamp960 from '../assets/hero/basecamp-960.webp';
-import basecamp1280 from '../assets/hero/basecamp-1280.webp';
-import cloud from '../assets/hero/cloud.webp';
+const glyphs = '@%#*+=-:. ';
+const rows = Array.from({length:108}, (_,y) => frames[0].tones.slice(y*144,(y+1)*144).split('').map(t=>glyphs[Number(t)]).join(''));
 ---
-<section class="hero" aria-labelledby="hero-title" data-motion="paused">
-  <div class="hero-scene" aria-hidden="true">
-    <img class="hero-art" src={basecamp.src} srcset={`${basecamp640.src} 640w, ${basecamp960.src} 960w, ${basecamp1280.src} 1280w, ${basecamp.src} 1536w`} sizes="(max-width: 680px) max(100vw, 570px), max(100vw, 1275px)" width={basecamp.width} height={basecamp.height} alt="" fetchpriority="high" />
-    <div class="hero-sky"></div>
-    <img class="hero-cloud" src={cloud.src} width={cloud.width} height={cloud.height} alt="" />
-    <span class="camp-glow"></span>
-  </div>
-  <div class="container hero-inner">
-    <div class="hero-copy">
-      <h1 id="hero-title">My favorite part is seeing people use it.</h1>
-      <p class="hero-description">I build AI tools at D&B. What keeps me building is watching something I made become part of someone's day.</p>
-      <p class="hero-credentials">AI Engineer at D&B <span aria-hidden="true">·</span> UF alum</p>
-      <div class="hero-actions"><a class="button button-primary" href="#projects">Explore my work <Arrow direction="down-right" /></a><a class="text-link" href="#contact">Say hello <Arrow /></a></div>
+<section class="hero container" aria-labelledby="hero-title" data-motion="paused">
+  <div class="hero-copy">
+    <h1 id="hero-title">Anton Salvador</h1>
+    <p class="hero-credentials">AI Engineer at Dun &amp; Bradstreet · UF alum</p>
+    <p class="hero-description">I build software and AI agents.</p>
+    <p>Currently working on agentic AI systems: MCPs, evals, observability, permissions, and all the fun stuff that makes agents actually work in production.</p>
+    <div class="hero-links">
+      {site.email && <a href={`mailto:${site.email}`}>Email</a>}
+      {site.github && <a href={site.github}>GitHub</a>}
+      {site.linkedin && <a href={site.linkedin}>LinkedIn</a>}
     </div>
+    <a class="text-link hero-work" href="#projects">Explore my work <Arrow direction="down-right" /></a>
   </div>
-  <button class="motion-toggle" type="button" hidden aria-label="Play animation" aria-pressed="false">
-    <svg class="motion-pause" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 3v10M11 3v10" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
-    <svg class="motion-play" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m5 3 8 5-8 5V3Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" /></svg>
-    <span>Play animation</span>
-  </button>
+  <figure class="ascii-figure">
+    <div class="ascii-stage">
+      <svg class="ascii-static" viewBox="0 0 840 630" role="img" aria-label={`ASCII photograph: ${frames[0].label}`}>
+        {rows.map((row,y)=><text x="3" y={(y+.5)*630/108} textLength="834" lengthAdjust="spacing" dominant-baseline="middle" xml:space="preserve">{row}</text>)}
+      </svg>
+      <canvas class="ascii-canvas" width="840" height="630" role="img" aria-label={`ASCII photograph: ${frames[0].label}`} hidden></canvas>
+    </div>
+    <figcaption class="ascii-controls" hidden>
+      <button type="button" class="motion-toggle" aria-label="Play animation" aria-pressed="false">Play animation</button>
+      <span class="photo-position">1 / {frames.length}</span>
+      <button type="button" class="next-photo" aria-label="Next photo">Next photo <Arrow /></button>
+    </figcaption>
+  </figure>
 </section>
 <script>
   import { initializeHeroMotion } from '../scripts/motion';

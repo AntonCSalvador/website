@@ -1,5 +1,5 @@
 ---
-title: An internal AI platform at D&B
+title: Internal AI platform
 summary: Building AI tools that become part of someone's working day.
 role: Technical owner · Lead & founding engineer
 order: 1
@@ -19,6 +19,6 @@ Role-based access control helps keep capabilities appropriate to each person's r
 
 ## Built for production
 
-The platform is in production at D&B, following the company's required processes. Its AI workflows use LangChain and LangGraph, with LangSmith supporting observability.
+The platform is in production at Dun & Bradstreet, following the company's required processes. Its AI workflows use LangChain and LangGraph, with LangSmith supporting observability.
 
 Watching something I built become part of a colleague's day is the result that matters most to me.

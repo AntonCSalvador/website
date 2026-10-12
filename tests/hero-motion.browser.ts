@@ -12,9 +12,17 @@ test('hero honors reduced motion and preserves an explicit pause across scrollin
     const hero = page.locator('.hero');
     await page.waitForFunction(() => document.querySelector('.hero')?.getAttribute('data-motion') === 'paused');
     assert.equal(await hero.getAttribute('data-motion'), 'paused');
-    assert.equal(await page.locator('.hero-cloud').evaluate((cloud) => getComputedStyle(cloud).animationName), 'none');
+    assert.equal(await page.locator('.ascii-canvas').count(), 1);
+    const snapshot = () => page.locator('.ascii-canvas').evaluate((canvas: HTMLCanvasElement) => canvas.toDataURL());
+    const still = await snapshot();
+    await page.waitForTimeout(150);
+    assert.equal(await snapshot(), still);
     await page.emulateMedia({ reducedMotion: 'no-preference' });
     await page.waitForFunction(() => document.querySelector('.hero')?.getAttribute('data-motion') === 'running');
+    await page.getByRole('button', { name: 'Next photo' }).click();
+    const start = await snapshot();
+    await page.waitForTimeout(400);
+    assert.notEqual(await snapshot(), start);
     await page.getByRole('button', { name: 'Pause animation' }).click();
     await page.locator('#contact').scrollIntoViewIfNeeded();
     await hero.scrollIntoViewIfNeeded();
@@ -37,22 +45,23 @@ test('hero honors reduced motion and preserves an explicit pause across scrollin
   }
 });
 
-// A mobile crop or script-dependent scene must not remove the readable introduction or campsite.
+// No-JS visitors still get a real, generated ASCII frame and usable introduction.
 test('mobile hero remains readable and illustrated without JavaScript', async () => {
   const browser = await chromium.launch({ channel: 'chrome' });
   try {
     const page = await browser.newPage({ viewport: { width: 390, height: 844 }, javaScriptEnabled: false });
     await page.goto('http://127.0.0.1:4321/');
     assert.equal(await page.locator('.hero').getAttribute('data-motion'), 'paused');
-    assert.equal(await page.locator('.hero-art').evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0), true);
-    // Omitting responsive candidates makes phones download the full landscape.
-    assert.ok((await page.locator('.hero-art').getAttribute('srcset'))?.includes('640w'));
-    assert.ok(await page.locator('.hero-art').getAttribute('sizes'));
+    assert.equal(await page.locator('.ascii-static text').count(), 108);
+    assert.equal(await page.locator('.ascii-static text').first().evaluate(el => el.textContent?.length), 144);
+    assert.equal(await page.locator('.ascii-static').isVisible(), true);
     const heading = await page.locator('#hero-title').boundingBox();
     assert.ok(heading && heading.x >= 0 && heading.x + heading.width <= 390);
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), true);
     assert.equal(await page.getByRole('button', { name: /animation/ }).isVisible(), false);
     assert.ok(await page.getByRole('link', { name: 'Explore my work' }).isVisible());
+    assert.equal(await page.getByRole('link', { name: 'TFT profile' }).getAttribute('href'), 'https://tactics.tools/player/na/BAGSANDER/2427');
+    assert.equal(await page.getByRole('link', { name: 'Fortnite profile' }).getAttribute('href'), 'https://fortnitetracker.com/fortnite/profile/epic/P0NCH0%20GUY/matchmaking/overview');
   } finally {
     await browser.close();
   }

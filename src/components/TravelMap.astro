@@ -15,7 +15,7 @@ const labels: Record<string, string> = { boston: 'Boston, Massachusetts', cincin
 ---
 <section id="travel" class="section travel-section" aria-labelledby="travel-title" data-travel-map>
   <div class="container">
-    <div class="section-heading"><h2 id="travel-title">A little further<br />from my desk.</h2><p>Places I've visited in 2026. A few new perspectives, and photos to come.</p></div>
+    <div class="section-heading"><h2 id="travel-title">2026 travels</h2><p>Places I've visited this year. Photos and stories to come.</p></div>
     <div class="travel-layout">
       <div class="travel-atlas">
         <div class="atlas-heading"><p>2026 <span>· Five destinations</span></p><button class="map-overview" type="button" hidden>Show all destinations</button></div>
@@ -68,12 +68,12 @@ const labels: Record<string, string> = { boston: 'Boston, Massachusetts', cincin
   .map-overview { color: var(--ink); background: transparent; border: 1px solid #839b89; border-radius: 6px; padding: .45rem .75rem; font-size: .8rem; min-height: 44px; }
   .map-overview[hidden] { display: none; }
   .map-overview:hover { background: var(--paper); }
-  .map-window { height: auto; aspect-ratio: 1000 / 760; position: relative; overflow: hidden; background: #d9e8e5; border-radius: var(--radius); isolation: isolate; }
+  .map-window { height: auto; aspect-ratio: 1000 / 760; position: relative; overflow: hidden; background: #eeecf3; border-radius: var(--radius); isolation: isolate; }
   .travel-geography { width: 100%; height: 100%; position: absolute; inset: 0; }
-  .map-land { fill: #f8f7eb; stroke: #a5b8a5; stroke-width: 1.25; transform-origin: 0 0; }
+  .map-land { fill: #faf9f6; stroke: #c4bfd0; stroke-width: 1.25; transform-origin: 0 0; }
   .map-land path { vector-effect: non-scaling-stroke; }
-  .map-place-labels { fill: #526e60; font-size: 15px; letter-spacing: 2px; font-weight: 600; }
-  .map-place-labels .ocean-label { fill: #456762; font-size: 19px; font-weight: 450; letter-spacing: 1px; }
+  .map-place-labels { fill: #605c6e; font-size: 15px; letter-spacing: 2px; font-weight: 600; }
+  .map-place-labels .ocean-label { fill: #605c6e; font-size: 19px; font-weight: 450; letter-spacing: 1px; }
   .map-pin { position: absolute; left: var(--pin-x); top: var(--pin-y); width: 44px; height: 44px; transform: translate(-50%, -50%); display: flex; justify-content: center; align-items: center; color: var(--ink); text-decoration: none; z-index: 2; }
   .pin-dot { width: 13px; height: 13px; border-radius: 50%; border: 3px solid var(--paper); background: var(--ink); box-shadow: 0 1px 5px #234c3e38; }
   .pin-name { position: absolute; left: calc(50% + 13px); top: 11px; font-size: .78rem; font-weight: 650; line-height: 1.1; white-space: nowrap; background: #f8f7ebed; padding: 3px 5px; border-radius: 3px; }
@@ -89,12 +89,12 @@ const labels: Record<string, string> = { boston: 'Boston, Massachusetts', cincin
   .map-caption a { font-size: .7rem; white-space: nowrap; }
   .destination-list { padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: .2rem 1.3rem; margin-top: 1.3rem; }
   .destination-list a { display: flex; align-items: center; gap: .55rem; min-height: 44px; font-size: .86rem; text-decoration: none; }
-  .destination-list a:hover, .destination-list a[aria-pressed="true"] { color: #b54a25; text-decoration: underline; }
+  .destination-list a:hover, .destination-list a[aria-pressed="true"] { color: var(--orange); text-decoration: underline; }
   .list-dot { width: 6px; height: 6px; background: currentColor; border-radius: 50%; flex-shrink: 0; }
   .trip-panels { padding-top: 52px; }
   .trip-panel { padding-block: 1.8rem; border-top: 1px solid #b4c3aa; }
   .trip-panel[hidden] { display: none; }
-  .trip-heading h3 { font-size: clamp(2.2rem, 2.7vw, 2.8rem); }
+  .trip-heading h3 { font-size: 1.5rem; }
   .trip-heading > p { margin-top: .65rem; font-size: .87rem; color: var(--ink-soft); }
   .trip-heading > p span { white-space: nowrap; }
   .trip-empty { margin-top: 4rem; }

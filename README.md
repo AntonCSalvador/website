@@ -2,6 +2,12 @@
 
 An Astro, TypeScript, and CSS portfolio for engineering projects, writing, and travel photography. The site builds to static files; it needs no database, API keys, or hosted map service.
 
+## ASCII hero
+
+The hero renders seven user-supplied photos at 144 × 108 character samples. Only derived brightness data in `src/data/hero-frames.json` ships; the original photos and EXIF/location metadata do not. The first frame has a static SVG-text fallback without JavaScript. Canvas animation respects reduced motion, explicit pause, offscreen visibility, and hidden tabs.
+
+Originals stay in ignored `incoming/hero-photos/`. To regenerate the committed data after editing the source list in `scripts/prepare-hero.mjs`, run `node scripts/prepare-hero.mjs`. Normal builds do not need the originals. The render is derived from the supplied photos, not generated imagery; the optional local comparison at port 4323 is not a site route.
+
 ## Run locally
 
 Use Node.js 24 or later and an installed Google Chrome for browser checks.
