@@ -1,1 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="#234c3e"/><path d="m12 47 20-31 20 31H12Z" fill="#f7b76b"/><path d="m25 47 7-15 7 15" fill="#234c3e"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title">
+  <title id="title">ASCII Chopper crying</title>
+  <rect width="128" height="128" rx="22" fill="#faf9f6"/>
+  <g font-family="Consolas, 'Courier New', monospace" font-size="20" font-weight="700" text-anchor="middle" xml:space="preserve">
+    <text x="64" y="19" fill="#252332">\  |  /</text>
+    <g fill="#bb6489">
+      <text x="64" y="36">.-===-.</text>
+      <text x="64" y="53">|==X==|</text>
+    </g>
+    <g fill="#252332">
+      <text x="64" y="70">(o   o)</text>
+      <text x="64" y="104">|T ^ T|</text>
+      <text x="64" y="121">`-___-`</text>
+    </g>
+    <text x="64" y="87" fill="#6089b4">|;   ;|</text>
+  </g>
+</svg>
